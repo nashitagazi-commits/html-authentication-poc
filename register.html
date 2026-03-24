@@ -1,38 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register</title>
+    <title>Register - Authentication System</title>
+
+    <!-- Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
 
-<h2>Registration Page</h2>
+<body class="bg-light">
 
-<form>
-    <label>Name:</label><br>
-    <input type="text" name="name"><br><br>
+<div class="container min-vh-100 d-flex justify-content-center align-items-center">
 
-    <label>Email ID:</label><br>
-    <input type="email" name="email"><br><br>
+    <div class="card shadow-lg p-4" style="width: 400px;">
 
-    <label>Phone Number:</label><br>
-    <input type="text" name="phone"><br><br>
+        <div class="text-center mb-3">
+            <h2 class="fw-bold text-success">
+                <i class="bi bi-person-plus"></i> Create Account
+            </h2>
+            <p class="text-muted">Join us today</p>
+        </div>
 
-    <label>Password:</label><br>
-    <input type="password" name="password"><br><br>
+        <form>
 
-    <label>Confirm Password:</label><br>
-    <input type="password" name="confirm-password"><br><br>
+            <!-- Name -->
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" placeholder="Enter full name" required
+                oninvalid="this.setCustomValidity('Please enter your full name')"
+                oninput="this.setCustomValidity('')">
+            </div>
 
-    <!-- Register button redirects to login page -->
-    <a href="login.html">
-        <button type="button">Register</button>
-    </a>
-</form>
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-control" placeholder="Enter email" required
+                oninvalid="this.setCustomValidity('Enter a valid email')"
+                oninput="this.setCustomValidity('')">
+            </div>
 
-<br>
+            <!-- Phone -->
+            <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" placeholder="Enter phone number" required
+                oninvalid="this.setCustomValidity('Enter your phone number')"
+                oninput="this.setCustomValidity('')">
+            </div>
 
-<!-- Already have account link -->
-<a href="login.html">I already have an account</a>
+            <!-- Password -->
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <div class="input-group">
+                    <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+                    <span class="input-group-text" onclick="togglePassword('password','eye1')">
+                        <i class="bi bi-eye" id="eye1"></i>
+                    </span>
+                </div>
+                <small id="strengthText" class="text-muted"></small>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+                <label class="form-label">Confirm Password</label>
+                <div class="input-group">
+                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required>
+                    <span class="input-group-text" onclick="togglePassword('confirmPassword','eye2')">
+                        <i class="bi bi-eye" id="eye2"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Register Button -->
+            <button class="btn btn-success w-100 fw-bold mt-2" onclick="showLoading(event)">
+                <span id="btnText">Register</span>
+                <span id="spinner" class="spinner-border spinner-border-sm d-none"></span>
+            </button>
+
+        </form>
+
+        <div class="text-center mt-3">
+            <span>Already have an account?</span><br>
+            <a href="index.html" class="text-decoration-none">Login Here</a>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="text-center mt-3 text-muted">
+    <small>© 2026 Authentication System | Designed by Nashita</small>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JS Features -->
+<script>
+function togglePassword(fieldId, iconId) {
+    const field = document.getElementById(fieldId);
+    const icon = document.getElementById(iconId);
+
+    if (field.type === "password") {
+        field.type = "text";
+        icon.classList.replace("bi-eye", "bi-eye-slash");
+    } else {
+        field.type = "password";
+        icon.classList.replace("bi-eye-slash", "bi-eye");
+    }
+}
+
+document.getElementById("password").addEventListener("input", function() {
+    const value = this.value;
+    const strengthText = document.getElementById("strengthText");
+
+    if (value.length < 4) {
+        strengthText.textContent = "Weak password";
+        strengthText.style.color = "red";
+    } else if (value.length < 8) {
+        strengthText.textContent = "Medium strength";
+        strengthText.style.color = "orange";
+    } else {
+        strengthText.textContent = "Strong password";
+        strengthText.style.color = "green";
+    }
+});
+
+function showLoading(event) {
+    event.preventDefault();
+
+    document.getElementById("btnText").textContent = "Processing...";
+    document.getElementById("spinner").classList.remove("d-none");
+
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 1500);
+}
+</script>
 
 </body>
 </html>
